@@ -1,6 +1,6 @@
 class Manager
     @@all = []
-    attr_reader :name, age, department
+    attr_reader :name, :age, :department
 
     def initialize (name, age, department)
         @name = name
