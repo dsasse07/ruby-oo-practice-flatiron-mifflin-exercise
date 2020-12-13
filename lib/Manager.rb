@@ -14,9 +14,8 @@ class Manager
         @@all
     end
 
-    def employees
-        Employee.all.select
-        
-    end
+    # def employees
+    #     Employee.all.select
+    # end
 
 end
