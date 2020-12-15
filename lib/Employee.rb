@@ -1,42 +1,43 @@
 class Employee
-    @@all = []
+  @@all = []
+  attr_accessor :salary, :role, :name, :manager
 
+  def initialize(name, salary, manager, role)
+      @name = name
+      @salary = salary
+      @manager = manager
+      @role = role
+      @@all << self
+  end
 
-    attr_accessor :salary, :role, :manager, :name
+  def self.all
+      @@all
+  end
 
-    def initialize(name, salary, manager, role)
-        @name = name
-        @salary = salary
-        @manager = manager
-        @role = role
-        @@all << self
-    end
+  def self.paid_over(num)
+      self.all.select {|employee| employee.salary > num}
+  end
+  
+  def department
+      self.manager.department
+  end
 
-    def self.all
-        @@all
-    end
+  def self.find_by_department(department_name)
+      self.all.find {|employee| employee.department == department_name}
+  end
 
-    def self.paid_over(number)
-      self.all.select {|employee| employee.salary > number}
-    end
-
-    def self.find_by_department(department) 
-      self.all.find{|employee| employee.manager.department == department}
-    end
-
-    def tax_bracket 
-      tax_bracket = Employee.all.select { |employee| employee.salary.between?(self.salary - 1000, self.salary+1000)}
+  def tax_bracket
+      tax_bracket = Employee.all.select {|employee| employee.salary.between?(self.salary-1000, self.salary+1000)}
       tax_bracket.delete(self)
       tax_bracket
-    end
+  end
 
-    def self.search_by_role(role_name) 
+  def self.search_by_role(role_name)
       self.all.select {|employee| employee.role.name == role_name}
-    end
+  end
 
-    def get_promoted(new_role)
-      self.role = new_role 
-      self.salary *= 1.1
-    end
-
+  def get_promoted(role_obj)
+      self.role = role_obj
+      self.salary *= 1.05
+  end
 end
