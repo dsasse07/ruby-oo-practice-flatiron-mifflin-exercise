@@ -18,7 +18,7 @@ class Role
     end
 
     def managers
-        self.employees.map(&:manager)
+        self.employees.map(&:manager).uniq
     end
 
     def add_employee(name, salary, manager)
